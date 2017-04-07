@@ -1,0 +1,18 @@
+.btn {
+    margin-right: 5px;
+}
+
+.todo-done {
+    text-decoration: line-through;
+    color: #87bd91;
+}
+
+.table-todo tr td:nth-child(2),
+.table-todo tr th:nth-child(2) {
+    width: 200px !important;
+    text-align: center;
+}
+
+.table-todo tr td {
+    vertical-align: middle !important;
+}

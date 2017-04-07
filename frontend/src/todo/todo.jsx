@@ -21,6 +21,8 @@ class Todo extends Component {
         this.handleAdd = this.handleAdd.bind(this)
         this.handleChange = this.handleChange.bind(this)
         this.handleRemove = this.handleRemove.bind(this)
+        this.handleTodoAsDone = this.handleTodoAsDone.bind(this)
+        this.handleTodoAsPending = this.handleTodoAsPending.bind(this)
 
         this.initList()
     }
@@ -61,6 +63,22 @@ class Todo extends Component {
             })
     }
 
+    handleTodoAsDone(todo){
+        axios
+            .put(`${URL}/${todo._id}`, { ...todo, done: true})
+            .then(resp => {
+                this.initList()
+            })
+    }
+
+    handleTodoAsPending(todo){
+        axios
+            .put(`${URL}/${todo._id}`, { ...todo, done: false})
+            .then(resp => {
+                this.initList()
+            })
+    }
+
     render() {
         return (
             <div>
@@ -73,6 +91,8 @@ class Todo extends Component {
 
                 <TodoList 
                     list={this.state.list}
+                    handleTodoAsPending={this.handleTodoAsPending}
+                    handleTodoAsDone={this.handleTodoAsDone}
                     handleRemove={this.handleRemove}/>
             </div>
         );
