@@ -6,7 +6,9 @@ const TodoForm = (props) => {
     return(
         <div className='todoForm'>
             <div className="col-xs-12 col-sm-8 col-md-10">
-                <input onChange={props.handleChange}
+                <input 
+                    value={props.value}
+                    onChange={props.handleChange}
                     className='form-control input-lg' id='description' type='text' placeholder='Adicione uma tarefa' ></input>
             </div>
 

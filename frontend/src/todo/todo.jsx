@@ -16,6 +16,15 @@ class Todo extends Component {
         //binds
         this.handleAdd = this.handleAdd.bind(this)
         this.handleChange = this.handleChange.bind(this)
+        this.initList = this.initList.bind(this)
+    }
+
+    initList(){
+        axios.get(`${URL}?sort=-createdAt`)
+            .then(resp => {
+                this.setState({...this.state, description: '', list: resp.data})
+                console.log(resp.data)
+            })
     }
 
     handleChange(event){
@@ -26,7 +35,7 @@ class Todo extends Component {
         const description = this.state.description
         axios.post(URL, {description})
             .then(resp => {
-                console.log('cadastrou!')
+                this.initList()
             })
     }
 
@@ -34,7 +43,9 @@ class Todo extends Component {
         return (
             <div>
                 <PageHeader name='Tarefas' small='Cadastro' />
-                <TodoForm handleChange={this.handleChange}
+                <TodoForm 
+                    value={this.state.description}
+                    handleChange={this.handleChange}
                     handleAdd={this.handleAdd} />
                 <TodoList />
             </div>
