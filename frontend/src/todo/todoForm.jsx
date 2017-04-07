@@ -10,7 +10,8 @@ const TodoForm = (props) => {
             </div>
 
             <div className='col-xs-12 col-sm-4 col-md-2'>
-                <IconButton style='primary' icon='plus'></IconButton>
+                <IconButton style='primary' icon='plus'
+                    onClick={props.handleAdd}></IconButton>
             </div>
         </div>
     )
