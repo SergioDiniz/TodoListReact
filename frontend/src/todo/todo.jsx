@@ -23,17 +23,19 @@ class Todo extends Component {
         this.handleRemove = this.handleRemove.bind(this)
         this.handleTodoAsDone = this.handleTodoAsDone.bind(this)
         this.handleTodoAsPending = this.handleTodoAsPending.bind(this)
+        this.handleSearch = this.handleSearch.bind(this)
 
         this.initList()
     }
 
-    initList() {
+    initList(description = '') {
+        const search = description ? `&description__regex=/${description}/` : ''
         axios
-            .get(`${URL}?sort=-createdAt`)
+            .get(`${URL}?sort=-createdAt` + search)
             .then(resp => {
                 this.setState({
                     ...this.state,
-                    description: '',
+                    description,
                     list: resp.data
                 })
             })
@@ -59,7 +61,7 @@ class Todo extends Component {
         axios
             .delete(`${URL}/${todo._id}`)
             .then(resp => {
-                this.initList()
+                this.initList(this.state.description)
             })
     }
 
@@ -67,7 +69,7 @@ class Todo extends Component {
         axios
             .put(`${URL}/${todo._id}`, { ...todo, done: true})
             .then(resp => {
-                this.initList()
+                this.initList(this.state.description)
             })
     }
 
@@ -75,8 +77,12 @@ class Todo extends Component {
         axios
             .put(`${URL}/${todo._id}`, { ...todo, done: false})
             .then(resp => {
-                this.initList()
+                this.initList(this.state.description)
             })
+    }
+
+    handleSearch(){
+        this.initList(this.state.description)
     }
 
     render() {
@@ -87,7 +93,8 @@ class Todo extends Component {
                 <TodoForm
                     value={this.state.description}
                     handleChange={this.handleChange}
-                    handleAdd={this.handleAdd}/>
+                    handleAdd={this.handleAdd}
+                    handleSearch={this.handleSearch}/>
 
                 <TodoList 
                     list={this.state.list}
